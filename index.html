@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>theintrospectiveidiot</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf8f0;
+    --ink: #2d2416;
+    --ink-light: #6b5c3e;
+    --pink: #f5b8c4;
+    --pink-dark: #d4768a;
+    --yellow: #f7e9a0;
+    --yellow-dark: #c9a c227;
+    --blue: #b8d8f5;
+    --blue-dark: #5a8fb8;
+    --green: #c8e6c9;
+    --green-dark: #4a8c4f;
+    --paper: #fffef8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M5 3l14 9-7 1-4 7z' fill='%232d2416' stroke='%232d2416' stroke-width='1'/%3E%3C/svg%3E"), auto;
+  }
+
+  /* doodle background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(245,184,196,0.15) 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(184,216,245,0.15) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(247,233,160,0.1) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .doodle-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* wiggly underline */
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg); }
+  }
+
+  /* hero */
+  .hero {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--ink-light);
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.2rem 1rem;
+    margin-bottom: 1.2rem;
+    transform: rotate(-1deg);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .hero h1 {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 0.8rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero h1 .underline-svg {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--ink-light);
+    max-width: 480px;
+    margin: 1.2rem auto 0;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .hero-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.8rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    padding: 0.45rem 1.3rem;
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+
+  .btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 var(--ink);
+  }
+
+  .btn.pink { background: var(--pink); }
+  .btn.blue { background: var(--blue); }
+  .btn.yellow { background: var(--yellow); }
+
+  /* section label */
+  .section-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--ink) 0, var(--ink) 6px,
+      transparent 6px, transparent 12px
+    );
+    opacity: 0.3;
+  }
+
+  /* about card */
+  .about-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    margin-bottom: 3rem;
+    box-shadow: 5px 5px 0 var(--ink);
+    position: relative;
+  }
+
+  .about-card::before {
+    content: '✦';
+    position: absolute;
+    top: -14px;
+    right: 24px;
+    font-size: 1.4rem;
+    background: var(--cream);
+    padding: 0 6px;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--ink);
+  }
+
+  .about-text p + p { margin-top: 0.8rem; }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+
+  .tag {
+    font-family: 'Caveat', cursive;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--ink);
+    display: inline-block;
+  }
+
+  .tag.c { background: var(--yellow); }
+  .tag.systems { background: var(--pink); }
+  .tag.linux { background: var(--green); }
+  .tag.compilers { background: var(--blue); }
+
+  /* projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 3rem;
+  }
+
+  .project-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    padding: 1.4rem 1.6rem;
+    box-shadow: 4px 4px 0 var(--ink);
+    text-decoration: none;
+    color: var(--ink);
+    display: block;
+    transition: transform 0.12s, box-shadow 0.12s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .project-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 7px 7px 0 var(--ink);
+  }
+
+  .project-card:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+
+  .project-card.pink-card { background: #fff5f7; }
+  .project-card.blue-card { background: #f0f7ff; }
+  .project-card.yellow-card { background: #fffdf0; }
+  .project-card.green-card { background: #f2fff2; }
+
+  .project-emoji {
+    font-size: 2rem;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .project-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .p-tag {
+    font-size: 0.75rem;
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    padding: 0.1rem 0.55rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--ink);
+    background: rgba(255,255,255,0.6);
+  }
+
+  .project-arrow {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.4rem;
+    font-size: 1.1rem;
+    opacity: 0.4;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .project-card:hover .project-arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
+  /* sticky note */
+  .sticky {
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: 4px 20px 20px 20px;
+    padding: 1.4rem 1.6rem;
+    box-shadow: 4px 4px 0 var(--ink);
+    margin-bottom: 3rem;
+    position: relative;
+    transform: rotate(-0.5deg);
+  }
+
+  .sticky::before {
+    content: '📌';
+    position: absolute;
+    top: -18px;
+    left: 16px;
+    font-size: 1.3rem;
+  }
+
+  .sticky p {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  /* footer */
+  .footer {
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--ink-light);
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px dashed rgba(45,36,22,0.2);
+  }
+
+  /* floating doodles */
+  .float-doodle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.13;
+    font-size: 3rem;
+  }
+
+  .fd1 { top: 8%; left: 3%; transform: rotate(-15deg); font-size: 2.5rem; }
+  .fd2 { top: 22%; right: 4%; transform: rotate(12deg); font-size: 2rem; }
+  .fd3 { top: 55%; left: 2%; transform: rotate(8deg); font-size: 3rem; }
+  .fd4 { top: 70%; right: 3%; transform: rotate(-10deg); font-size: 2.2rem; }
+  .fd5 { bottom: 12%; left: 6%; transform: rotate(20deg); font-size: 1.8rem; }
+  .fd6 { bottom: 25%; right: 6%; transform: rotate(-8deg); font-size: 2.5rem; }
+
+  /* page fade in */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero { animation: fadeUp 0.6s ease both; }
+  .about-card { animation: fadeUp 0.6s 0.1s ease both; }
+  .projects-grid { animation: fadeUp 0.6s 0.2s ease both; }
+  .sticky { animation: fadeUp 0.6s 0.3s ease both; }
+
+  @media (max-width: 600px) {
+    .container { padding: 2rem 1rem 5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .about-card { padding: 1.2rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- floating background doodles -->
+<div class="float-doodle fd1">✦</div>
+<div class="float-doodle fd2">◇</div>
+<div class="float-doodle fd3">○</div>
+<div class="float-doodle fd4">✧</div>
+<div class="float-doodle fd5">△</div>
+<div class="float-doodle fd6">□</div>
+
+<div class="container">
+
+  <!-- hero -->
+  <section class="hero">
+    <div class="hero-tag">✦ open for chaos ✦</div>
+    <h1>
+      theintrospectiveidiot
+      <svg class="underline-svg" viewBox="0 0 400 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M2 9 C 40 3, 80 11, 120 6 S 200 2, 240 8 S 320 12, 360 5 S 390 8, 398 7" stroke="#f5b8c4" stroke-width="4" stroke-linecap="round" fill="none"/>
+      </svg>
+    </h1>
+    <p class="hero-desc">a cs student writing chaotic C programs, thinking too hard about everything, and occasionally producing something that works.</p>
+    <div class="hero-links">
+      <a href="https://github.com/theintrospectiveidiot" target="_blank" class="btn pink">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        github
+      </a>
+    </div>
+  </section>
+
+  <!-- about -->
+  <div class="section-label">✦ about me</div>
+  <div class="about-card">
+    <div class="about-text">
+      <p>second-semester CS student who somehow started programming with <em>Scheme</em> (via The Little Schemer), then Python, then fell headfirst into C and never came back up.</p>
+      <p>i write programs that occasionally write themselves, arrays that know what type they are, and tokenizers that read their own source code. i also read Wolfram's <em>A New Kind of Science</em> for fun. make of that what you will.</p>
+      <p>currently running Fedora Linux with a terminal-native workflow, fighting struct padding, and trying to understand why <em>everything</em> is either beautiful or a total sin.</p>
+    </div>
+    <div class="tag-row">
+      <span class="tag c">C</span>
+      <span class="tag systems">systems programming</span>
+      <span class="tag linux">fedora / linux</span>
+      <span class="tag compilers">compilers & parsers</span>
+      <span class="tag c">discrete math</span>
+      <span class="tag systems">x86-64 asm</span>
+    </div>
+  </div>
+
+  <!-- projects -->
+  <div class="section-label">✦ things i've built</div>
+  <div class="projects-grid">
+
+    <a class="project-card pink-card" href="https://github.com/theintrospectiveidiot/fun" target="_blank">
+      <span class="project-arrow">↗</span>
+      <span class="project-emoji">🧬</span>
+      <div class="project-title">self-modifying quine ecosystem</div>
+      <div class="project-desc">a C program that rewrites itself, tracks generations, has a code cemetery, time-travel debugging, and fires a Hitchhiker's Guide easter egg at generation 42. yes, really.</div>
+      <div class="project-tags">
+        <span class="p-tag">C</span>
+        <span class="p-tag">self-modifying code</span>
+        <span class="p-tag">quine</span>
+        <span class="p-tag">pure chaos</span>
+      </div>
+    </a>
+
+    <a class="project-card blue-card" href="https://github.com/theintrospectiveidiot/better_array" target="_blank">
+      <span class="project-arrow">↗</span>
+      <span class="project-emoji">📦</span>
+      <div class="project-title">better_array</div>
+      <div class="project-desc">an N-dimensional array library in C with stride-based indexing, _Generic overloading, magic numbers for type safety, and ANSI compiler-style error messages. built before knowing this was "hard".</div>
+      <div class="project-tags">
+        <span class="p-tag">C</span>
+        <span class="p-tag">_Generic</span>
+        <span class="p-tag">variadic macros</span>
+        <span class="p-tag">data structures</span>
+      </div>
+    </a>
+
+    <a class="project-card yellow-card" href="https://github.com/theintrospectiveidiot" target="_blank">
+      <span class="project-arrow">↗</span>
+      <span class="project-emoji">🔤</span>
+      <div class="project-title">C tokenizer</div>
+      <div class="project-desc">a self-tokenizing C tokenizer that correctly handles snake_case identifiers. the first step toward writing a full parser — Crafting Interpreters is next on the list.</div>
+      <div class="project-tags">
+        <span class="p-tag">C</span>
+        <span class="p-tag">lexer</span>
+        <span class="p-tag">compilers</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- sticky note -->
+  <div class="sticky">
+    <p>📖 currently reading: <em>Crafting Interpreters</em> by Nystrom & <em>A New Kind of Science</em> by Wolfram — because apparently one obsession at a time isn't enough.</p>
+  </div>
+
+  <!-- footer -->
+  <div class="footer">
+    made with too much gcc and not enough sleep ✦ theintrospectiveidiot
+  </div>
+
+</div>
+</body>
+</html>
