@@ -30,6 +30,12 @@ a {
   margin-bottom: 3rem;
 }
 
+.row {
+    display flex;
+
+    gap: 20px;
+}
+
 .card_github {
     position: relative;
 
