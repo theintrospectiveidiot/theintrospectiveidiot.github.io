@@ -72,6 +72,8 @@ a {
     height: 65%;
 }
 
+
+
 .bottom_github {
 
     background: #cad4c2;
@@ -91,8 +93,40 @@ a {
     padding-right: 10px;
 }
 
+.terminal {
+    position: absolute;
+
+    top: -30px;
+    left: 0px;
+
+    width: 100%;
+    height: 100%; 
+    
+    opacity: 1;
+}
+
+.terminal_hover {
+    position: absolute;
+
+    top: -30px;
+    left: 0px;
+
+    width: 100%;
+    height: 100%; 
+    
+    opacity: 0;
+}
+
 .card_github:hover .border {
     opacity: 1
+}
+
+.card_github:hover .terminal {
+    opacity: 0;
+}
+
+.card_github:hover .terminal_hover {
+    opacity: 1;
 }
 
 .card_blog {
