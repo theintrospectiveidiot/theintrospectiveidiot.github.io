@@ -65,7 +65,7 @@ a {
 }
 
 .top_github {
-    background: #f18701;
+    background: #90e0ef;
     color: black;
 
     width: 100%;
@@ -105,6 +105,8 @@ a {
     transition: 0.05s;
 
     margin-bottom: 2rem;
+
+    overflow: hidden;
 
 }
 .batman {
