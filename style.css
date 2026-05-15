@@ -127,6 +127,25 @@ a {
     opacity: 1
 }
 
+.card_blog {
+    position: relative;
+
+    width: 250px;
+    height: 200px;
+    
+    border: 2px solid transparent;
+    transition: 0.05s;
+
+    margin-bottom: 2rem;
+
+}
+.top_blog {
+    background: #f18701;
+    color: black;
+
+    width: 100%;
+    height: 65%;
+}
 .bottom_blog {
 
     background: #cad4c2;
