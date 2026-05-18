@@ -28,6 +28,7 @@ a {
 .subtitle {
   color: #666;
   margin-bottom: 3rem;
+  font-size: 17px;
 }
 
 .text {
@@ -35,4 +36,81 @@ a {
     font-size: 45px;
 
     font-family: Georgia, serif;
+}
+
+.heading {
+    font-family: "Intel One Mono";
+    font-weight: bold;
+
+    font-size: 30px;
+}
+
+.clangvsgcc {
+    position: relative;
+
+    width: 700px;
+    height: 30px;
+    
+    font-family: "Intel One Mono";
+
+    display: flex;
+    
+    align-items: baseline;
+
+    gap: 0px;
+}
+
+.border {
+    position: absolute;
+
+    top: -4px;
+    left: -4px;
+
+    width: 708px;
+    height: 40px;
+
+    opacity: 0;
+    
+    transition: 0.05s;
+}
+
+.left_one {
+    background: #90e0ef;
+
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+
+    width: 10%;
+    height: 100%;
+}
+
+.middle_one {
+    background: #ccd5ae;
+   
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+
+    width: 65%;
+    height: 100%;
+}
+
+.right_one {
+    background: #4c956c;
+    color: #fefee3;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 25%;
+    height: 100%;
+
+}
+
+.clangvsgcc:hover .border {
+    opacity: 1;
 }
