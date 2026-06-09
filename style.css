@@ -48,7 +48,7 @@ a {
 
     margin-bottom: 2rem;
 
-    overflow: hidden;
+    
 
 }
 
@@ -57,11 +57,11 @@ a {
 
    opacity: 0;
 
-   top: -75px;
-   left: -125px;
+   top: -3px;
+   left: -4px;
 
-   width: 152%;
-   height: 152%;
+   width: 103%;
+   height: 104%;
 
    transition: 0.05s;
 
@@ -145,8 +145,6 @@ a {
 
     margin-bottom: 2rem;
 
-    overflow: hidden;
-
 }
 .batman {
     position: absolute;
@@ -178,11 +176,11 @@ a {
 
    opacity: 0;
 
-   top: -75px;
-   left: -125px;
+   top: -3px;
+   left: -4px;
 
-   width: 152%;
-   height: 152%;
+   width: 103%;
+   height: 104%;
 
    transition: 0.05s;
 
